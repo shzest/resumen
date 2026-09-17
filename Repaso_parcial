@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repaso para el parcial · Fundamentos de computadores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E9EDEA;
+  --panel:#F5F7F4;
+  --ink:#14242F;
+  --ink-soft:#4A5C66;
+  --rule:#C6CFC9;
+  --probe:#1F6F8B;
+  --alert:#A8432A;
+  --mark:#E3D9A8;
+  --mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  --sans:'Archivo','Helvetica Neue',Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#101A21;
+    --panel:#17242C;
+    --ink:#DCE5E2;
+    --ink-soft:#93A6AE;
+    --rule:#2C3E48;
+    --probe:#6FC2D8;
+    --alert:#E0876B;
+    --mark:#4A4326;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#101A21;
+  --panel:#17242C;
+  --ink:#DCE5E2;
+  --ink-soft:#93A6AE;
+  --rule:#2C3E48;
+  --probe:#6FC2D8;
+  --alert:#E0876B;
+  --mark:#4A4326;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.62;
+  font-weight:400;
+}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px 96px}
+
+/* ---------- hero ---------- */
+header.hero{
+  padding:64px 0 40px;
+  border-bottom:1px solid var(--rule);
+  margin-bottom:8px;
+}
+.kicker{
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:var(--ink-soft);
+  letter-spacing:.02em;
+  margin:0 0 20px;
+}
+h1{
+  font-size:clamp(2.1rem,6.2vw,3.35rem);
+  line-height:1.03;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 22px;
+  max-width:19ch;
+}
+.lede{font-size:1.09rem;max-width:64ch;color:var(--ink-soft);margin:0 0 36px}
+
+/* decode strip: the characteristic object of this subject */
+.decode{
+  border:1px solid var(--rule);
+  background:var(--panel);
+  padding:20px 22px;
+  max-width:560px;
+}
+.decode .bits{
+  font-family:var(--mono);
+  font-weight:600;
+  font-size:clamp(1.5rem,7vw,2.3rem);
+  letter-spacing:.14em;
+  margin:0 0 4px;
+  color:var(--probe);
+}
+.decode .bits-cap{font-family:var(--mono);font-size:.76rem;color:var(--ink-soft);margin:0 0 18px}
+.decode dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:2px 16px}
+.decode dt{font-size:.94rem;color:var(--ink-soft)}
+.decode dd{margin:0;font-family:var(--mono);font-weight:600;text-align:right}
+
+/* ---------- sections ---------- */
+section{padding:52px 0 8px;border-top:1px solid var(--rule)}
+section:first-of-type{border-top:none}
+.tag{
+  font-family:var(--mono);
+  font-size:.76rem;
+  color:var(--probe);
+  margin:0 0 10px;
+}
+h2{
+  font-size:clamp(1.5rem,4.2vw,2.05rem);
+  line-height:1.12;
+  letter-spacing:-.02em;
+  font-weight:800;
+  margin:0 0 6px;
+  max-width:26ch;
+}
+.sub{color:var(--ink-soft);margin:0 0 30px;max-width:66ch}
+h3{
+  font-size:1.09rem;
+  font-weight:600;
+  letter-spacing:-.005em;
+  margin:36px 0 12px;
+  padding-left:14px;
+  border-left:3px solid var(--probe);
+}
+h4{font-size:.99rem;font-weight:600;margin:24px 0 8px}
+p{max-width:70ch;margin:0 0 14px}
+ul,ol{max-width:70ch;padding-left:22px;margin:0 0 16px}
+li{margin-bottom:7px}
+code,.m{font-family:var(--mono);font-size:.92em;font-weight:500}
+strong{font-weight:600}
+a{color:var(--probe)}
+
+/* formula band */
+.band{
+  background:var(--panel);
+  border-left:3px solid var(--ink);
+  padding:16px 20px;
+  margin:0 0 20px;
+  overflow-x:auto;
+}
+.band p{font-family:var(--mono);font-size:.93rem;margin:0 0 7px;white-space:nowrap}
+.band p:last-child{margin-bottom:0}
+.band .note{font-family:var(--sans);font-size:.9rem;color:var(--ink-soft);white-space:normal;margin-top:12px}
+
+/* trap */
+.trap{
+  border-left:3px solid var(--alert);
+  background:var(--panel);
+  padding:16px 20px;
+  margin:0 0 22px;
+}
+.trap h4{margin:0 0 8px;color:var(--alert);font-size:.95rem}
+.trap p,.trap ul{margin-bottom:0}
+.trap li{margin-bottom:6px}
+
+/* procedure: genuinely a sequence, so numbered */
+ol.proc{counter-reset:s;list-style:none;padding-left:0;margin:0 0 22px}
+ol.proc li{
+  counter-increment:s;
+  position:relative;
+  padding-left:38px;
+  margin-bottom:12px;
+}
+ol.proc li::before{
+  content:counter(s);
+  position:absolute;left:0;top:1px;
+  width:24px;height:24px;
+  display:grid;place-items:center;
+  font-family:var(--mono);font-size:.78rem;font-weight:600;
+  color:var(--paper);background:var(--ink);
+  border-radius:50%;
+}
+
+/* tables */
+.tbl{overflow-x:auto;margin:0 0 22px;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;font-size:.93rem;min-width:480px}
+th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:600;background:var(--panel);font-size:.85rem}
+tr:last-child td{border-bottom:none}
+td.m,th.m{font-family:var(--mono);white-space:nowrap}
+
+/* checklist */
+.check{list-style:none;padding:0;max-width:70ch}
+.check li{
+  padding-left:30px;position:relative;margin-bottom:10px;
+}
+.check li::before{
+  content:"";position:absolute;left:0;top:.38em;
+  width:14px;height:14px;border:1.5px solid var(--ink-soft);
+}
+mark{background:var(--mark);color:var(--ink);padding:0 3px}
+
+footer{
+  border-top:1px solid var(--rule);
+  margin-top:56px;padding-top:22px;
+  font-size:.88rem;color:var(--ink-soft);
+}
+@media (max-width:560px){
+  body{font-size:16px}
+  .band p{white-space:normal}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">Fundamentos de computadores · repaso de parcial</p>
+  <h1>Todo lo que hay que tener en la cabeza</h1>
+  <p class="lede">Cuatro bloques: representación de la información, circuitos combinacionales, circuitos secuenciales y el contexto introductorio. Fórmulas, procedimientos y los errores que más puntos cuestan.</p>
+
+  <div class="decode">
+    <p class="bits">10011010</p>
+    <p class="bits-cap">ocho bits, tres lecturas distintas</p>
+    <dl>
+      <dt>Natural</dt><dd>154</dd>
+      <dt>Complemento a 2</dt><dd>&minus;102</dd>
+      <dt>Signo y magnitud</dt><dd>&minus;26</dd>
+      <dt>Empaquetado en hex</dt><dd>9A</dd>
+    </dl>
+  </div>
+</header>
+
+<section>
+  <p class="tag">orientación</p>
+  <h2>Cómo reparte el peso este parcial</h2>
+  <p>La materia real está en tres módulos, no en cinco. El archivo <span class="m">Modulo3.pdf</span> es la guía de estudio GES3, no teoría, y el archivo <span class="m">Modulo4.pdf</span> contiene los combinacionales mientras que <span class="m">Modulo4-1.pdf</span> contiene los secuenciales.</p>
+  <div class="tbl">
+    <table>
+      <tr><th>Bloque</th><th>Págs.</th><th>Ejercicios</th><th>Qué se pide en examen</th></tr>
+      <tr><td>Introducción</td><td class="m">24</td><td class="m">—</td><td>Conceptos y comparaciones. Preguntas cortas.</td></tr>
+      <tr><td>Representación</td><td class="m">96</td><td class="m">10</td><td>Cálculo con lápiz. Codificar, decodificar, operar.</td></tr>
+      <tr><td>Combinacionales</td><td class="m">108</td><td class="m">13</td><td>Análisis y síntesis de circuitos. Karnaugh.</td></tr>
+      <tr><td>Secuenciales</td><td class="m">76</td><td class="m">9</td><td>Cronogramas y grafos de estado.</td></tr>
+    </table>
+  </div>
+  <p>Los dos bloques que deciden la nota son representación y combinacionales, por volumen y porque todo lo demás se apoya en ellos. El complemento a 2 reaparece en el sumador y la UAL; los combinacionales reaparecen dentro de cada circuito secuencial.</p>
+</section>
+
+<section>
+  <p class="tag">bloque A · representación de la información</p>
+  <h2>Números, formatos y sus límites</h2>
+  <p class="sub">Es el bloque más mecánico y por eso el más rentable: se aprueba practicando, no entendiendo más.</p>
+
+  <h3>Cambios de base</h3>
+  <p>El teorema fundamental de la numeración es la única fórmula que necesitas para ir <em>hacia</em> decimal:</p>
+  <div class="band">
+    <p>X = &sum; x<sub>i</sub> &middot; b<sup>i</sup></p>
+    <p class="note">Los índices negativos son la parte fraccionaria: 1101,01<sub>(2</sub> = 8+4+1+0,25 = 13,25<sub>(10</sub></p>
+  </div>
+  <p>Para ir <em>desde</em> decimal, la parte entera y la fraccionaria se tratan por separado y con métodos distintos:</p>
+  <ol class="proc">
+    <li><strong>Parte entera.</strong> Divisiones sucesivas entre la base. Los restos, leídos del último al primero, son los dígitos.</li>
+    <li><strong>Parte fraccionaria.</strong> Multiplicaciones sucesivas por la base. Las partes enteras que van saliendo, leídas en orden de aparición, son los dígitos.</li>
+    <li><strong>Unir.</strong> El resultado es la parte entera, la coma y la parte fraccionaria.</li>
+  </ol>
+  <p>Entre una base <span class="m">b</span> y su potencia <span class="m">b<sup>n</sup></span> no hace falta dividir nada: se agrupan los dígitos de <span class="m">n</span> en <span class="m">n</span>. De binario a hexadecimal, grupos de cuatro; a octal, grupos de tres.</p>
+  <div class="trap">
+    <h4>Trampa que cae casi siempre</h4>
+    <p>El agrupamiento se hace <strong>partiendo de la coma</strong> hacia fuera, no desde el extremo izquierdo. A la izquierda se rellena con ceros por delante y a la derecha con ceros por detrás. En <span class="m">111010011,111010011<sub>(2</sub></span> el primer grupo entero es <span class="m">0001</span> y el último fraccionario es <span class="m">1100</span>.</p>
+  </div>
+
+  <h3>Rango y precisión</h3>
+  <p>Con <span class="m">n</span> dígitos en base <span class="m">b</span> hay <span class="m">b<sup>n</sup></span> códigos, y por tanto como máximo <span class="m">b<sup>n</sup></span> números representables. Qué números son exactamente depende de la codificación. Esta tabla es lo que conviene llevar memorizado:</p>
+  <div class="tbl">
+    <table>
+      <tr><th>Formato (n bits, m fraccionarios)</th><th class="m">Rango</th><th class="m">Precisión</th></tr>
+      <tr><td>Natural</td><td class="m">[0, 2<sup>n</sup>&minus;1]</td><td class="m">1</td></tr>
+      <tr><td>Signo y magnitud, entero</td><td class="m">[&minus;(2<sup>n&minus;1</sup>&minus;1), 2<sup>n&minus;1</sup>&minus;1]</td><td class="m">1</td></tr>
+      <tr><td>Complemento a 2</td><td class="m">[&minus;2<sup>n&minus;1</sup>, 2<sup>n&minus;1</sup>&minus;1]</td><td class="m">1</td></tr>
+      <tr><td>Coma fija sin signo</td><td class="m">[0, 2<sup>n&minus;m</sup>&minus;2<sup>&minus;m</sup>]</td><td class="m">2<sup>&minus;m</sup></td></tr>
+      <tr><td>Coma fija, signo y magnitud</td><td class="m">[&minus;2<sup>n&minus;m&minus;1</sup>+2<sup>&minus;m</sup>, 2<sup>n&minus;m&minus;1</sup>&minus;2<sup>&minus;m</sup>]</td><td class="m">2<sup>&minus;m</sup></td></tr>
+    </table>
+  </div>
+  <p>La precisión es la distancia entre dos representables consecutivos y <strong>no depende del signo</strong>: solo del número de bits fraccionarios. El error de representación es <span class="m">|X &minus; X&#770;|</span>, la distancia entre lo que querías y lo que pudiste escribir. Un número fuera de rango no es representable ni aproximable: ahí no hay error, hay desbordamiento.</p>
+  <p>Cuando el enunciado pide el <strong>número mínimo de bits</strong>, se cuenta por partes. Enteros: los que necesita la magnitud, más uno si hay signo. Fraccionarios: los que necesita la parte fraccionaria para ser exacta, si es que termina.</p>
+
+  <h3>Complemento a 2</h3>
+  <div class="band">
+    <p>Codificar X negativo:   2<sup>n</sup> &minus; |X|</p>
+    <p>Cambio de signo rápido: copiar bits desde la derecha hasta el primer 1 incluido; complementar el resto</p>
+    <p>Restar:                 A &minus; B  =  A + (&minus;B)</p>
+    <p>Extender de n a m bits: replicar el bit de signo por la izquierda</p>
+  </div>
+  <p>Los positivos se codifican igual que en signo y magnitud. Las ventajas frente a signo y magnitud, que a veces se preguntan de palabra: codificación única del cero y suma y resta con el mismo circuito.</p>
+  <div class="trap">
+    <h4>Las tres confusiones más habituales</h4>
+    <ul>
+      <li><strong>Extensión.</strong> En natural se añaden ceros. En signo y magnitud se añaden ceros <em>a la izquierda de la magnitud</em>, manteniendo el bit de signo en el extremo. En Ca2 se replica el bit de signo. Son tres reglas distintas.</li>
+      <li><strong>Desbordamiento en Ca2.</strong> No lo indica el acarreo final, sino el signo: si sumas dos números del mismo signo y obtienes el signo contrario, hay desbordamiento. Sumar un positivo y un negativo nunca desborda.</li>
+      <li><strong>Rango asimétrico.</strong> En Ca2 hay un valor negativo más que positivos. Con 8 bits el rango es <span class="m">[&minus;128, +127]</span>, no <span class="m">[&minus;127, +127]</span>.</li>
+    </ul>
+  </div>
+
+  <h3>Exceso a M y coma flotante</h3>
+  <div class="band">
+    <p>Exceso a M:  código = X + M        valor = código &minus; M</p>
+    <p>Habitualmente  M = 2<sup>q&minus;1</sup>,  con q = bits del exponente</p>
+    <p>Coma flotante:  &plusmn; R &middot; b<sup>e</sup>      S | e en exceso a M | R mantisa</p>
+  </div>
+  <p>El procedimiento para codificar en coma flotante, que es el ejercicio largo típico:</p>
+  <ol class="proc">
+    <li>Pasa el número a binario, entero y fracción.</li>
+    <li>Normaliza desplazando la coma hasta la forma <span class="m">1,X</span>. El número de posiciones desplazadas, con su signo, es el exponente.</li>
+    <li>Descarta el <span class="m">1</span> de la izquierda si el formato usa bit implícito, y ajusta la mantisa a los bits disponibles truncando o redondeando según pida el enunciado.</li>
+    <li>Codifica el exponente sumándole <span class="m">M</span> y escribiéndolo en binario con <span class="m">q</span> bits.</li>
+    <li>Monta la cadena: signo, exponente, mantisa. Si piden empaquetado, agrupa de cuatro en cuatro y pasa a hexadecimal.</li>
+  </ol>
+  <p>Para decodificar se recorre al revés: separar los campos según el formato, restar <span class="m">M</span> al exponente, reponer el <span class="m">1,</span> implícito y desplazar la coma.</p>
+  <p>BCD es aparte y es sencillo: <strong>cada dígito decimal en cuatro bits</strong>, independientemente. <span class="m">178<sub>(10</sub></span> son tres grupos, no un binario de 8 bits.</p>
+
+  <h3>Atajos que ahorran tiempo</h3>
+  <p>Multiplicar por <span class="m">b<sup>k</sup></span> es desplazar la coma <span class="m">k</span> posiciones a la derecha; dividir, a la izquierda. En binario esto significa que <span class="m">&times;2<sup>k</sup></span> y <span class="m">&div;2<sup>k</sup></span> no requieren ninguna operación, solo mover bits, y es exactamente por eso que existen los desplazadores del bloque siguiente.</p>
+</section>
+
+<section>
+  <p class="tag">bloque B · circuitos lógicos combinacionales</p>
+  <h2>De la tabla de verdad al circuito</h2>
+  <p class="sub">Definición que hay que poder recitar: la salida en un instante depende solo de las entradas en ese mismo instante. Sin memoria.</p>
+
+  <h3>Álgebra de Boole y representación de funciones</h3>
+  <p>Tres operaciones: suma lógica, producto lógico y negación. De todos los teoremas, los que se usan de verdad al simplificar son De Morgan, el factor común y la absorción. El principio de dualidad te ahorra demostrar la mitad de las igualdades: intercambia <span class="m">+</span> con <span class="m">&middot;</span> y <span class="m">0</span> con <span class="m">1</span>.</p>
+  <div class="band">
+    <p>(x + y)' = x' &middot; y'          (x &middot; y)' = x' + y'</p>
+    <p>x + x&middot;y = x               x + x'&middot;y = x + y</p>
+  </div>
+  <p>Una función se puede dar como expresión algebraica o como tabla de verdad, y hay que saber pasar en las dos direcciones. La vía directa es la <strong>suma de mintérminos</strong>: por cada fila en la que la función vale 1, un producto con todas las variables, negadas donde la fila tiene 0; después se suman todos. Es cómoda porque se lee directamente de la tabla y porque se sintetiza en dos niveles sin pensar.</p>
+  <p>En las <strong>funciones especificadas de forma incompleta</strong> hay combinaciones que no se darán nunca, marcadas con <span class="m">x</span>. No son un 0 ni un 1: en Karnaugh valen lo que te convenga.</p>
+
+  <h3>Síntesis, análisis y minimización</h3>
+  <p>Analizar es ir del dibujo a la expresión, propagando desde las entradas hacia la salida. Sintetizar es lo contrario. Dos niveles significa que ninguna señal atraviesa más de dos puertas: interesa porque el retardo total depende del número de niveles, y eso es lo que se ve en un cronograma de puertas.</p>
+  <p>El método de Karnaugh en los cuatro pasos del módulo:</p>
+  <ol class="proc">
+    <li>Traslada la tabla de verdad al mapa. Dos casillas son adyacentes si su combinación difiere en una sola variable, y por eso las etiquetas van en código Gray: <span class="m">00, 01, 11, 10</span>.</li>
+    <li>Agrupa visualmente los unos en bloques de tamaño potencia de dos, lo más grandes posible y tan pocos como puedas.</li>
+    <li>Deduce el término producto de cada grupo: sobreviven solo las variables que no cambian dentro del grupo.</li>
+    <li>Suma los términos obtenidos.</li>
+  </ol>
+  <div class="trap">
+    <h4>Errores de Karnaugh que cuestan el ejercicio entero</h4>
+    <ul>
+      <li>Olvidar que el mapa <strong>se cierra por los bordes</strong>: la primera y la última columna son adyacentes, y lo mismo las filas. Las cuatro esquinas forman un grupo válido.</li>
+      <li>Meter una <span class="m">x</span> en un grupo solo porque está ahí. Se incluye si hace el grupo más grande, se ignora si no aporta.</li>
+      <li>Dejar grupos redundantes. Si todos los unos de un grupo ya están cubiertos por otros, ese grupo sobra y la expresión deja de ser mínima.</li>
+    </ul>
+  </div>
+
+  <h3>Los bloques, con sus convenios exactos</h3>
+  <p>Aquí lo que se evalúa es precisión en los nombres y en las anchuras de los buses. Conviene tener las señales memorizadas tal como las define el módulo:</p>
+  <div class="tbl">
+    <table>
+      <tr><th>Bloque</th><th>Señales</th><th>Funcionamiento</th></tr>
+      <tr><td>Multiplexor 2<sup>m</sup>-1</td><td class="m">2<sup>m</sup> e, m c, s, VAL</td><td>Conecta a la salida la entrada de datos que seleccionan las de control.</td></tr>
+      <tr><td>Codificador 2<sup>m</sup>-m</td><td class="m">2<sup>m</sup> e, m s, VAL</td><td>Da en binario el número de la entrada activa de más peso. Más peso es más prioridad.</td></tr>
+      <tr><td>Descodificador m-2<sup>m</sup></td><td class="m">m e, 2<sup>m</sup> s, VAL</td><td>Activa únicamente la salida cuyo número codifican las entradas.</td></tr>
+      <tr><td>Desplazadores</td><td class="m">entrada, control, salida</td><td>Solo interconexiones: no llevan ninguna puerta lógica dentro.</td></tr>
+      <tr><td>Memoria ROM</td><td class="m">@ de m bits, salida de n</td><td>Saca <span class="m">M[i]</span>, el dato de la dirección i. 2<sup>m</sup> palabras de n bits.</td></tr>
+      <tr><td>Sumador (FA)</td><td class="m">a<sub>i</sub>, b<sub>i</sub>, c<sub>i</sub> &rarr; s<sub>i</sub>, c<sub>i+1</sub></td><td>Suma tres bits y produce bit de suma y acarreo.</td></tr>
+      <tr><td>UAL</td><td class="m">A, B, R de n bits; m control</td><td>2<sup>m</sup> operaciones. Bits de estado: acarreo C, desbordamiento V, cero Z.</td></tr>
+    </table>
+  </div>
+  <p>Si <span class="m">VAL</span> no está dibujada, se asume 1. Cuando vale 0, todas las salidas valen 0, y ahí está el detalle fino del codificador: sus salidas valen <span class="m">0</span> tanto si no hay ninguna entrada activa como si la activa es la número 0, así que por sí solas no distinguen los dos casos.</p>
+  <p>Con estos bloques se implementan funciones lógicas sin diseñar puertas: un multiplexor con las variables en el control y los valores de la tabla en los datos, o un descodificador más una OR de los mintérminos. La GES3 aclara algo útil: <mark>no se exige el caso en que el número de entradas de la función no coincide con las del bloque</mark>.</p>
+  <p>Sobre los desplazadores, lo que se pregunta es la interpretación aritmética. Desplazar <span class="m">n</span> posiciones a la izquierda es multiplicar por <span class="m">2<sup>n</sup></span>; a la derecha, dividir. Para un natural se usa el desplazador lógico, que mete ceros. Para un entero en Ca2 se usa el aritmético, que replica el bit de signo. La división no es exacta cuando se pierden unos por la derecha.</p>
+</section>
+
+<section>
+  <p class="tag">bloque C · circuitos lógicos secuenciales</p>
+  <h2>Memoria, estado y tiempo</h2>
+  <p class="sub">La salida depende de las entradas actuales y de las anteriores. Eso obliga a un mecanismo de sincronización, que es el reloj.</p>
+
+  <h3>El biestable D</h3>
+  <p>Es el dispositivo de memoria elemental y guarda un bit. Tiene salidas <span class="m">Q</span> y <span class="m">Q'</span>, y carga en <span class="m">Q</span> el valor de la entrada <span class="m">D</span> en cada flanco ascendente del reloj. La entrada puede cambiar en cualquier momento; la salida solo cambia en los flancos.</p>
+  <ul>
+    <li><strong>Señal de carga.</strong> Permite congelar el valor: si no está activa, el biestable mantiene lo que tenía aunque llegue un flanco.</li>
+    <li><strong>Entradas asíncronas R y S.</strong> Ponen la salida a 0 o a 1 <em>sin esperar al reloj</em>, en el momento en que se activan.</li>
+  </ul>
+  <div class="band">
+    <p>T = 1 / F        F = 1,6 &middot; 10<sup>9</sup> Hz  &rarr;  T = 0,625 ns</p>
+  </div>
+
+  <h3>Bloques secuenciales</h3>
+  <p>Escalan la misma idea: el <strong>registro</strong> guarda una palabra, el <strong>banco de registros</strong> unas cuantas decenas y la <strong>memoria RAM</strong> millones. El banco tiene <span class="m">2<sup>m</sup></span> registros, un puerto de lectura (<span class="m">SL</span>, <span class="m">Dout</span>) y uno de escritura (<span class="m">SE</span>, <span class="m">E</span>, <span class="m">Din</span>), así que puede leer y escribir a la vez. Las diferencias entre banco y RAM que se piden de palabra son cuatro: tamaño, velocidad, implementación interna y forma de hacer las escrituras.</p>
+
+  <h3>El modelo de Moore</h3>
+  <p>En Moore <strong>la salida depende únicamente del estado</strong>, nunca directamente de la entrada. Las entradas solo deciden la transición. El comportamiento se expresa de dos maneras equivalentes y hay que saber convertir entre ellas: el grafo de estados, y el par formado por la tabla de transiciones y la tabla de salidas.</p>
+  <p>Para diseñar a partir de un enunciado:</p>
+  <ol class="proc">
+    <li>Identifica las entradas y las salidas, con su anchura en bits y su significado.</li>
+    <li>Pregúntate qué hace falta recordar. Cada respuesta distinta es un estado; ponle nombre y asígnale los valores de salida.</li>
+    <li>Dibuja las transiciones. De cada estado deben salir tantos arcos como combinaciones de entrada haya, sin ambigüedad y sin huecos.</li>
+    <li>Escribe la tabla de transiciones y la de salidas.</li>
+  </ol>
+  <p>Para implementarlo: con <span class="m">n</span> estados hacen falta <span class="m">&lceil;log<sub>2</sub> n&rceil;</span> biestables. Se codifican los estados en binario, con lo que las dos tablas se vuelven tablas de verdad, y el circuito queda como un bloque de biestables rodeado de dos circuitos combinacionales: uno que calcula el próximo estado a partir del estado y las entradas, y otro que calcula las salidas a partir del estado.</p>
+  <div class="trap">
+    <h4>Cronogramas: la regla que decide el ejercicio</h4>
+    <p>La transición la determina el valor que tiene la entrada <strong>justo al llegar al flanco, tocándolo por la izquierda</strong>. No el valor que toma después. Dos consecuencias prácticas: el estado y las salidas se mantienen constantes durante todo el ciclo, y el primer valor de un biestable suele quedar indeterminado porque no se sabe qué había en su entrada en el flanco anterior. Con varios biestables en cadena, dibuja una línea completa antes de pasar a la siguiente y respeta que cada una se retrasa un ciclo más.</p>
+  </div>
+</section>
+
+<section>
+  <p class="tag">bloque D · introducción</p>
+  <h2>El contexto, en quince líneas</h2>
+  <p class="sub">Poco peso, pero son puntos baratos si cae una pregunta corta.</p>
+  <p>Electrónica digital frente a analógica: la digital trabaja con dos valores de tensión asociados a los valores lógicos 0 y 1, en lugar de con una magnitud continua.</p>
+  <div class="tbl">
+    <table>
+      <tr><th>Generación</th><th>Tecnología</th><th>Hitos</th></tr>
+      <tr><td class="m">1ª · 1940-1955</td><td>Válvulas de vacío, memoria de anillos de ferrita</td><td>ENIAC; EDVAC, donde Von Neumann describe el programa almacenado; UNIVAC</td></tr>
+      <tr><td class="m">2ª · 1955-1965</td><td>Transistor</td><td>PDP-1; IBM 7030 con memoria virtual; ATLAS con interrupciones; CDC 6600</td></tr>
+      <tr><td class="m">3ª · 1965-1970</td><td>Circuitos integrados</td><td>IBM 360, primera serie compatible; PDP/8 y el bus; IBM 360/85 y la caché</td></tr>
+      <tr><td class="m">4ª · 1970-</td><td>Alta densidad de integración, memoria de semiconductores</td><td>Intel 4004 en 1971, el primer microprocesador; Altair 8800; IBM PC</td></tr>
+    </table>
+  </div>
+  <p><strong>Von Neumann</strong>: datos e instrucciones comparten la memoria principal. De ahí su generalidad, su unidad de control simple, y su cuello de botella en la comunicación memoria-CPU. <strong>Harvard</strong>: memorias separadas para programa y datos, lo que permite solapar accesos y de paso impide la automodificación del código. Se usa sobre todo en microcontroladores y electrónica distribuida.</p>
+</section>
+
+<section>
+  <p class="tag">plan</p>
+  <h2>Qué hacer con los días que queden</h2>
+  <p>El material trae unos 90 páginas de solucionario entre los tres módulos con ejercicios, y ahí está el verdadero valor. La secuencia que rinde más:</p>
+  <ol class="proc">
+    <li>Repasa este resumen de un bloque y, sin mirar nada, resuelve sus ejercicios de autoevaluación. Son 10 en representación, 13 en combinacionales y 9 en secuenciales.</li>
+    <li>Compara con el solucionario y anota <em>por qué</em> falló cada error, no solo cuál era la respuesta correcta.</li>
+    <li>Rehaz al día siguiente únicamente los que fallaste. Si vuelven a fallar, vuelve a la teoría de ese apartado concreto.</li>
+    <li>Cierra con las actividades intercaladas en el texto de cada módulo, que son más cortas y sirven para calentar.</li>
+  </ol>
+  <p>En combinacionales, los enunciados 12 y 13 (el control de dos ascensores y la UAL de cuatro bits) son los más parecidos a un problema largo de examen. En secuenciales, el 4 y el 9 (el semáforo y la alarma de la caja fuerte) son los que combinan diseño de grafo e interpretación temporal.</p>
+
+  <h3>Autocomprobación antes de entrar</h3>
+  <ul class="check">
+    <li>Paso un decimal con fracción a binario y a hexadecimal sin dudar dónde empiezan los grupos.</li>
+    <li>Escribo de memoria los rangos de natural, signo y magnitud, Ca2 y coma fija.</li>
+    <li>Cambio de signo en Ca2 en dos segundos y detecto el desbordamiento por el signo del resultado.</li>
+    <li>Codifico y decodifico coma flotante con bit implícito y exponente en exceso a M.</li>
+    <li>Saco la suma de mintérminos de cualquier tabla de verdad de cuatro variables.</li>
+    <li>Minimizo con Karnaugh usando los bordes y las indiferencias.</li>
+    <li>Digo de memoria las señales del multiplexor, codificador, descodificador, ROM y UAL.</li>
+    <li>Sé si un desplazamiento pide desplazador lógico o aritmético y cuándo la división no es exacta.</li>
+    <li>Distingo lo síncrono de lo asíncrono en un biestable D y sé para qué sirve la señal de carga.</li>
+    <li>Paso de enunciado a grafo, de grafo a tablas, y de tablas a cronograma.</li>
+  </ul>
+</section>
+
+<footer>
+  Resumen elaborado a partir de los cinco PDF del curso (UOC, Fundamentos de computadores, material CC-BY-SA). Las páginas y numeraciones citadas remiten a esos archivos.
+</footer>
+
+</div>
+</body>
+</html>
